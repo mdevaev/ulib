@@ -7,7 +7,7 @@ pkgdesc="Useful python library"
 arch=('any')
 url="http://github.com/mdevaev/helib.git"
 license="GPL"
-depends=('python2' 'python2-bencode')
+depends=('python2' 'python2-cjson')
 makedepends=('git')
 
 _gitroot="git://github.com/mdevaev/helib.git"
