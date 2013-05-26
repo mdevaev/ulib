@@ -3,15 +3,15 @@
 
 import os
 
+from helib import validatorlib
 from helib.validatorlib import ValidatorError
 
 
 ##### Public methods #####
 def validAccessiblePath(path, mode = os.F_OK) :
-    if path is None :
-        raise ValidatorError("Empty argument is not valid a path")
-    path = os.path.normpath(str(path).strip())
+    name = "accessible path"
+    path = validatorlib.notEmptyStrip(path, name)
     if not os.access(path, mode) :
-        raise ValidatorError("Argument \"%s\" is not valid accessible path" % (path))
+        validatorlib.raiseError(path, name)
     return path
 

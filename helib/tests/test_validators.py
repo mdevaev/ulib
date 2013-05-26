@@ -7,6 +7,7 @@ from helib import tools
 import helib.tools.tests # pylint: disable=W0611
 
 from helib import validators
+import helib.validators.fs
 import helib.validators.unix
 import helib.validators.common
 import helib.validators.network
@@ -36,6 +37,17 @@ class TestValidatorsUnix(tools.tests.TestValidatorsCase) :
                 ("_foo_bar_", "_foo_bar_"),
             ),
             ("-molestia", "te~st", "-", "-foo_bar", "", None),
+        )
+
+class TestValidatorsFs(tools.tests.TestValidatorsCase) :
+    def test_valid_accessible_path(self) :
+        self.checkValidator(
+            validators.fs.validAccessiblePath,
+            (
+                ("/root", "/root"),
+                (".", "."),
+            ),
+            ("/C:", "", None),
         )
 
 class TestValidatorsCommon(tools.tests.TestValidatorsCase) :
