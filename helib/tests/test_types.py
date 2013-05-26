@@ -66,13 +66,12 @@ class TestTypes(unittest.TestCase) :
         )
 
     def test_chunks(self) :
-       self.assertEqual(
+        self.assertEqual(
             tools.types.chunks([1, 2, 3, 4, 5, 6, 7], 2),
             [[1, 2], [3, 4], [5, 6], [7]],
         )
 
     def test_pmap_one_process(self) :
-        square = ( lambda arg : arg ** 2 )
         self.assertEqual(
             tools.types.pmap(math.sqrt, xrange(1000)),
             map(math.sqrt, xrange(1000)),
