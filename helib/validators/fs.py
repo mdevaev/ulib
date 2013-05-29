@@ -4,7 +4,6 @@
 import os
 
 from helib import validatorlib
-from helib.validatorlib import ValidatorError
 
 
 ##### Public methods #####
