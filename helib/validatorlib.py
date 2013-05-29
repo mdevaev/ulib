@@ -42,3 +42,8 @@ def checkRange(arg, valid_args_list, name) :
         raiseError(arg, name)
     return arg
 
+def checkIterable(arg, item_validator, iterable_validator, pass_none_flag = False) :
+    if arg is None :
+        return ( None if pass_none_flag else item_validator(arg) )
+    return map(item_validator, iterable_validator(arg))
+
