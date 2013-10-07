@@ -21,7 +21,7 @@ setup(
 	],
 	classifiers=[
 		"Topic :: Software Development :: Libraries :: Python Modules",
-        "Development Status :: 4 - Beta"
+        "Development Status :: 4 - Beta",
 		"Programming Language :: Python",
 		"Operating System :: OS Independent",
 	],
