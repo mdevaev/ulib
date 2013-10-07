@@ -4,8 +4,8 @@
 import unittest
 import math
 
-from helib import tools
-import helib.tools.types # pylint: disable=W0611
+from ulib import tools
+import ulib.tools.types # pylint: disable=W0611
 
 
 ##### Public classes #####

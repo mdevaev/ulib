@@ -3,8 +3,8 @@
 
 import unittest
 
-from helib import tools
-import helib.tools.unix # pylint: disable=W0611
+from ulib import tools
+import ulib.tools.unix # pylint: disable=W0611
 
 
 ##### Public classes #####

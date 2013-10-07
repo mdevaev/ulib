@@ -3,14 +3,14 @@
 
 import socket
 
-from helib import tools
-import helib.tools.tests # pylint: disable=W0611
+from ulib import tools
+import ulib.tools.tests # pylint: disable=W0611
 
-from helib import validators
-import helib.validators.fs
-import helib.validators.unix
-import helib.validators.common
-import helib.validators.network
+from ulib import validators
+import ulib.validators.fs
+import ulib.validators.unix
+import ulib.validators.common
+import ulib.validators.network
 
 
 ##### Public classes #####

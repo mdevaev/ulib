@@ -1,17 +1,17 @@
 # Contributor: Devaev Maxim <mdevaev@gmail.com>
 
-pkgname=python2-helib-git
+pkgname=python2-ulib-git
 pkgver=20130530
 pkgrel=1
 pkgdesc="Useful python library"
 arch=('any')
-url="http://github.com/mdevaev/helib.git"
+url="http://github.com/mdevaev/ulib.git"
 license="GPL"
 depends=('python2' 'python2-cjson')
 makedepends=('git')
 
-_gitroot="git://github.com/mdevaev/helib.git"
-_gitname="helib"
+_gitroot="git://github.com/mdevaev/ulib.git"
+_gitname="ulib"
 
 
 build() {

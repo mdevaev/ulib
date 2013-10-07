@@ -3,10 +3,10 @@
 
 import unittest
 
-from helib import tools
-import helib.tools.coding # pylint: disable=W0611
+from ulib import tools
+import ulib.tools.coding # pylint: disable=W0611
 
-from helib.validatorlib import ValidatorError
+from ulib.validatorlib import ValidatorError
 
 
 ##### Public classes #####

@@ -3,7 +3,7 @@ all :
 
 pylint :
 	pylint --rcfile=pylint.ini \
-		helib \
+		ulib \
 		*.py \
 		--output-format=colorized 2>&1 | less -SR
 

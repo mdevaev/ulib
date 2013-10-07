@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from helib import validatorlib
+from ulib import validatorlib
 
 
 ##### Public methods #####

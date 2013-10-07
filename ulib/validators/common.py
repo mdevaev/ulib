@@ -4,11 +4,11 @@
 import re
 import cjson
 
-from helib import tools
-import helib.tools.coding # pylint: disable=W0611
+from ulib import tools
+import ulib.tools.coding # pylint: disable=W0611
 
-from helib import validatorlib
-from helib.validatorlib import ValidatorError
+from ulib import validatorlib
+from ulib.validatorlib import ValidatorError
 
 
 ##### Public methods #####

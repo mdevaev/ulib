@@ -6,18 +6,18 @@ from setuptools import setup
 
 
 setup(
-	name="helib",
+	name="ulib",
 	version="0.1",
-	url="https://github.com/mdevaev/helib",
+	url="https://github.com/mdevaev/ulib",
 	license="GPLv3",
 	author="Devaev Maxim",
 	author_email="mdevaev@gmail.com",
 	description="Useful python library",
 	platforms="any",
 	packages=[
-		"helib",
-		"helib/tools",
-        "helib/validators",
+		"ulib",
+		"ulib/tools",
+        "ulib/validators",
 	],
 	classifiers=[
 		"Topic :: Software Development :: Libraries :: Python Modules",
