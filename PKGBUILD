@@ -1,7 +1,7 @@
 # Contributor: Devaev Maxim <mdevaev@gmail.com>
 
 pkgname=python2-ulib-git
-pkgver=20130530
+pkgver=20131007
 pkgrel=1
 pkgdesc="Useful python library"
 arch=('any')
@@ -17,7 +17,7 @@ _gitname="ulib"
 build() {
 	cd $startdir/src
 	if [ -d $_gitname ]; then
-		msg "Updateing local repository..."
+		msg "Updating local repository..."
 		cd $_gitname
 		git pull origin master || return 1
 		msg "The local files are updated."
