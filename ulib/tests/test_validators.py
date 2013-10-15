@@ -50,6 +50,23 @@ class TestValidatorsFs(tools.tests.TestValidatorsCase) :
             ("/C:", "", None),
         )
 
+    def test_valid_file_name(self) :
+        self.checkValidator(
+            validators.fs.validFileName,
+            (
+                ("test",       "test"),
+                ("test test [test] #test$", "test test [test] #test$"),
+                (".test",      ".test"),
+                ("..test",     "..test"),
+                ("..тест..",   "..тест.."),
+                ("..те\\ст..", "..те\\ст.."),
+                (".....",      "....."),
+                (".....txt",   ".....txt"),
+                ("test/",      "test"),
+            ),
+            (".", "..", "/test", "../test", "./.", "../.", "./..", "../.."),
+        )
+
 class TestValidatorsCommon(tools.tests.TestValidatorsCase) :
     def test_valid_bool(self) :
         self.checkValidator(
