@@ -47,7 +47,7 @@ def validStringList(arg) :
 
 ###
 def validEmpty(arg) :
-    if arg is None or (isinstance(arg, (str, unicode)) and len(arg.strip()) == 0) :
+    if arg is None or (isinstance(arg, basestring) and len(arg.strip()) == 0) :
         return None
     else :
         return arg
