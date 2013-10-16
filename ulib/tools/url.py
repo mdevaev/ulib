@@ -5,15 +5,22 @@ import httplib
 
 
 ##### Exceptions #####
-class BadRequest(Exception) :
+class ServerError(Exception) :
     def __init__(self, code, text) :
-        super(BadRequest, self).__init__()
+        super(ServerError, self).__init__()
         self.__code = code
         self.__text = text
+        self.__message = httplib.responses[code]
+
+    def code(self) :
+        return self.__code
+
+    def message(self) :
+        return self.__message
 
     def text(self) :
         return self.__text
 
     def __str__(self) :
-        return "%d %s" % (self.__code, httplib.responses[self.__code])
+        return "%d %s [%s]" % (self.__code, self.__message, self.__text)
 
