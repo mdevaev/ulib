@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
+import sys
 import os
 import StringIO
 import unittest
@@ -25,13 +26,17 @@ class TestTerm(unittest.TestCase) :
     def test_colored_stringio_raw(self) :
         self.assertEqual(tools.term.colored((31, 47), "Test", raw_flag=True, output=StringIO.StringIO()), ("", "Test", ""))
 
+    ###
+
+    @unittest.skipIf(not sys.stdout.isatty(), "stdout is not terminal")
     def test_terminal_size(self) :
-        (columns, lines) = tools.term.terminalSize(2, 1, -1, -1)
+        (columns, lines) = tools.term.terminalSize(2, 1, -2, -1)
         self.assertGreater(columns, 2)
         self.assertGreater(lines, 1)
 
+    @unittest.skipIf(not sys.stdout.isatty(), "stdout is not terminal")
     def test_terminal_size_min(self) :
-        (columns, lines) = tools.term.terminalSize(2000, 1000, -1, -1)
+        (columns, lines) = tools.term.terminalSize(2000, 1000, -2, -1)
         self.assertEqual(columns, 2000)
         self.assertEqual(lines, 1000)
 
