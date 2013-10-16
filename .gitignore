@@ -1,0 +1,6 @@
+/pkg-root.arch
+/pkg
+/src
+/build
+/ulib.egg-info
+*.pyc

@@ -9,5 +9,5 @@ pylint :
 
 clean :
 	find . -type f -name '*.pyc' -exec rm '{}' \;
-	rm -rf pkg-root.arch
+	rm -rf pkg-root.arch pkg src build ulib.egg-info
 
