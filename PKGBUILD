@@ -8,6 +8,7 @@ arch=('any')
 url="http://github.com/mdevaev/ulib.git"
 license="GPL"
 depends=('python2' 'python2-cjson')
+optdepends=('python2-socksipy-branch')
 makedepends=('git')
 
 _gitroot="git://github.com/mdevaev/ulib.git"
