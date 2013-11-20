@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 import sys
 import traceback
 
@@ -25,5 +22,5 @@ def newLine(text, output = sys.stdout) :
 
 def printTraceback(prefix = "", output = sys.stdout) :
     for row in traceback.format_exc().strip().split("\n") :
-        print >> output, prefix + row
+        print(prefix + row, file=output)
 

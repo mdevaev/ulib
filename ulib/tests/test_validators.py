@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-
-
 import socket
+import json
 
 from ulib import tools
 import ulib.tools.tests # pylint: disable=W0611
@@ -127,13 +125,12 @@ class TestValidatorsCommon(tools.tests.TestValidatorsCase) :
 
     def test_valid_string_list(self) :
         self.assertValidatorError(validators.common.validStringList, None)
-        test_list = map(str, range(10))
+        test_list = list(map(str, list(range(10))))
         self.assertEqual(validators.common.validStringList(", \t".join(test_list)), test_list)
         self.assertEqual(validators.common.validStringList(test_list), test_list)
 
     def test_valid_empty(self) :
         self.assertEqual(validators.common.validEmpty(""), None)
-        self.assertEqual(validators.common.validEmpty(u""), None)
         self.assertEqual(validators.common.validEmpty(None), None)
         self.assertNotEqual(validators.common.validEmpty("x"), None)
 
@@ -141,7 +138,7 @@ class TestValidatorsCommon(tools.tests.TestValidatorsCase) :
 
     def test_valid_json(self) :
         valid_json = """{"1": 1, "3": ["a", "b", "c"], "2": 2}"""
-        self.assertEqual(validators.common.validJson(valid_json), valid_json)
+        self.assertEqual(json.loads(validators.common.validJson(valid_json)), json.loads(valid_json))
         self.assertValidatorError(validators.common.validJson, "{1:1}")
 
     def test_valid_hex_string(self) :

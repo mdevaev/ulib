@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-
-
 import re
-
-import tools.coding
 
 
 ##### Exceptions #####
@@ -13,12 +8,12 @@ class ValidatorError(Exception) :
 
 ##### Public methods #####
 def raiseError(arg, name) :
-    raise ValidatorError("The argument \"%s\" is not a valid %s" % (tools.coding.utf8(arg), name))
+    raise ValidatorError("The argument \"%s\" is not a valid %s" % (arg, name))
 
 def notEmptyStrip(arg, name) :
     if arg is None :
         raise ValidatorError("The empty argument is not a valid %s" % (name))
-    return tools.coding.utf8(arg).strip()
+    return str(arg).strip()
 
 
 ###
@@ -45,5 +40,5 @@ def checkRange(arg, valid_args_list, name) :
 def checkIterable(arg, item_validator, iterable_validator, pass_none_flag = False) :
     if arg is None :
         return ( None if pass_none_flag else item_validator(arg) )
-    return map(item_validator, iterable_validator(arg))
+    return list(map(item_validator, iterable_validator(arg)))
 

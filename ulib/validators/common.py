@@ -1,11 +1,5 @@
-# -*- coding: utf-8 -*-
-
-
 import re
-import cjson
-
-from ulib import tools
-import ulib.tools.coding # pylint: disable=W0611
+import json
 
 from ulib import validatorlib
 from ulib.validatorlib import ValidatorError
@@ -28,9 +22,9 @@ def validNumber(arg, min_value = None, max_value = None, value_type = int) :
         validatorlib.raiseError(arg, "number")
 
     if not min_value is None and arg < min_value :
-        raise ValidatorError("The argument \"%s\" must be greater or equal than %d" % (tools.coding.utf8(arg), min_value))
+        raise ValidatorError("The argument \"%s\" must be greater or equal than %d" % (arg, min_value))
     if not max_value is None and arg > max_value :
-        raise ValidatorError("The argument \"%s\" must be lesser or equal then %d" % (tools.coding.utf8(arg), max_value))
+        raise ValidatorError("The argument \"%s\" must be lesser or equal then %d" % (arg, max_value))
     return arg
 
 
@@ -40,14 +34,14 @@ def validRange(arg, valid_args_list) :
 
 def validStringList(arg) :
     if isinstance(arg, (list, tuple)) :
-        return map(str, list(arg))
+        return list(map(str, list(arg)))
     arg = validatorlib.notEmptyStrip(arg, "string list")
-    return filter(None, re.split(r"[,\t ]+", arg))
+    return [_f for _f in re.split(r"[,\t ]+", arg) if _f]
 
 
 ###
 def validEmpty(arg) :
-    if arg is None or (isinstance(arg, basestring) and len(arg.strip()) == 0) :
+    if arg is None or (isinstance(arg, str) and len(arg.strip()) == 0) :
         return None
     else :
         return arg
@@ -63,9 +57,9 @@ def validMaybeEmpty(arg, validator) :
 def validJson(arg) :
     arg = validatorlib.notEmptyStrip(arg, "JSON structure")
     try :
-        return cjson.encode(cjson.decode(arg))
-    except Exception, err :
-        raise ValidatorError("The argument \"%s\" is not a valid JSON structure: %s" % (tools.coding.utf8(arg), str(err)))
+        return json.dumps(json.loads(arg))
+    except Exception as err :
+        raise ValidatorError("The argument \"%s\" is not a valid JSON structure: %s" % (arg, str(err)))
 
 def validHexString(arg) :
     return validatorlib.checkRegexp(arg, r"^[0-9a-fA-F]+$", "hex string")

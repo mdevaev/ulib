@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
-
-
 import sys
 import os
-import StringIO
+import io
 import unittest
 
 from ulib import tools
@@ -21,10 +18,10 @@ class TestTerm(unittest.TestCase) :
         self.assertEqual(tools.term.colored((31, 47), "Test", True, True), result)
 
     def test_colored_stringio(self) :
-        self.assertEqual(tools.term.colored((31, 47), "Test", output=StringIO.StringIO()), "Test")
+        self.assertEqual(tools.term.colored((31, 47), "Test", output=io.StringIO()), "Test")
 
     def test_colored_stringio_raw(self) :
-        self.assertEqual(tools.term.colored((31, 47), "Test", raw_flag=True, output=StringIO.StringIO()), ("", "Test", ""))
+        self.assertEqual(tools.term.colored((31, 47), "Test", raw_flag=True, output=io.StringIO()), ("", "Test", ""))
 
     ###
 

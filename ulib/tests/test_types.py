@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 import unittest
 import math
 
@@ -53,7 +50,7 @@ class TestTypes(unittest.TestCase) :
         self.assertEqual(tools.types.dictToList(self.__from_dict), self.__to_plain_list)
 
     def test_dict_hash(self) :
-        self.assertEqual(tools.types.dictHash(self.__from_dict), "bcd30033abffe688128607b606e6e3d8")
+        self.assertEqual(tools.types.dictHash(self.__from_dict), "978aaff92cac6157a5651f48febbb43782a600aa")
 
     def test_extend_replace(self) :
         self.assertEqual(
@@ -73,13 +70,13 @@ class TestTypes(unittest.TestCase) :
 
     def test_pmap_one_process(self) :
         self.assertEqual(
-            tools.types.pmap(math.sqrt, xrange(1000)),
-            map(math.sqrt, xrange(1000)),
+            tools.types.pmap(math.sqrt, range(1000)),
+            list(map(math.sqrt, range(1000))),
         )
 
     def test_pmap_multiprocessing(self) :
         self.assertEqual(
-            tools.types.pmap(math.sqrt, xrange(1000), 10),
-            map(math.sqrt, xrange(1000)),
+            tools.types.pmap(math.sqrt, range(1000), 10),
+            list(map(math.sqrt, range(1000))),
         )
 

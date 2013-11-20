@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
-
-
-import urllib2
-import urlparse
-import httplib
+import urllib.request
+import urllib.parse
+import urllib.error
+import http.client
 import socket
 try :
     import socks
@@ -17,7 +15,7 @@ class ServerError(Exception) :
         super(ServerError, self).__init__()
         self.__code = code
         self.__text = text
-        self.__message = httplib.responses[code]
+        self.__message = http.client.responses[code]
 
     def code(self) :
         return self.__code
@@ -36,15 +34,15 @@ class ServerError(Exception) :
 
 
 ##### Public classes #####
-class SocksConnection(httplib.HTTPConnection) :
+class SocksConnection(http.client.HTTPConnection) :
     def __init__(self, proxy_url = None, proxy_type = None, proxy_host = None, proxy_port = None,
         proxy_user = None, proxy_passwd = None, rdns_flag = True, *args_tuple, **kwargs_dict) :
         if socks is None :
             raise RuntimeError("Required module SocksiPy")
-        httplib.HTTPConnection.__init__(self, *args_tuple, **kwargs_dict)
+        http.client.HTTPConnection.__init__(self, *args_tuple, **kwargs_dict)
 
         if not proxy_url is None :
-            parsed = urlparse.urlparse(proxy_url)
+            parsed = urllib.parse.urlparse(proxy_url)
             scheme = parsed.scheme
             proxy_user = parsed.username
             proxy_passwd = parsed.password
@@ -66,9 +64,9 @@ class SocksConnection(httplib.HTTPConnection) :
             self.sock.settimeout(self.timeout)
         self.sock.connect((self.host, self.port))
 
-class SocksHandler(urllib2.HTTPHandler) :
+class SocksHandler(urllib.request.HTTPHandler) :
     def __init__(self, *args_tuple, **kwargs_dict) :
-        urllib2.HTTPHandler.__init__(self, debuglevel=kwargs_dict.pop("debuglevel", 0))
+        urllib.request.HTTPHandler.__init__(self, debuglevel=kwargs_dict.pop("debuglevel", 0))
         self.__args_tuple = args_tuple
         self.__kwargs_dict = kwargs_dict
 

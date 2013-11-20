@@ -1,10 +1,4 @@
-# -*- coding: utf-8 -*-
-
-
 import unittest
-
-from ulib import tools
-import ulib.tools.coding # pylint: disable=W0611
 
 from ulib.validatorlib import ValidatorError
 
@@ -20,6 +14,6 @@ class TestValidatorsCase(unittest.TestCase) :
     def assertValidatorError(self, validator, arg) :
         try :
             validator(arg)
-            raise AssertionError("Validator should not miss the value of \"%s\"" % (tools.coding.utf8(arg)))
+            raise AssertionError("Validator should not miss the value of \"%s\"" % (arg))
         except ValidatorError : pass
 
