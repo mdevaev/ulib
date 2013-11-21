@@ -1,21 +1,21 @@
 import unittest
 
-from ulib import tools
-import ulib.tools.unix # pylint: disable=W0611
+from ulib import system
+import ulib.system.unix # pylint: disable=W0611
 
 
 ##### Public classes #####
 class TestUnix(unittest.TestCase) :
     def test_disk_free(self) :
-        (full, used) = tools.unix.diskFree("/")
+        (full, used) = system.unix.diskFree("/")
         self.assertTrue(full > used)
 
     def test_uptime(self) :
-        uptime = tools.unix.uptime()
+        uptime = system.unix.uptime()
         self.assertTrue(uptime > 0)
 
     def test_load_average(self) :
-        avg_tuple = tools.unix.loadAverage()
+        avg_tuple = system.unix.loadAverage()
         for avg in avg_tuple :
             self.assertTrue(isinstance(avg, float))
 

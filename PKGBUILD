@@ -1,14 +1,14 @@
 # Contributor: Devaev Maxim <mdevaev@gmail.com>
 
-pkgname=python2-ulib-git
-pkgver="0.4"
+pkgname=python-ulib-git
+pkgver="0.5"
 pkgrel=1
 pkgdesc="Useful python library"
 arch=('any')
 url="http://github.com/mdevaev/ulib.git"
 license="GPL"
-depends=('python2' 'python2-cjson')
-optdepends=('python2-socksipy-branch')
+depends=('python')
+optdepends=('python-socksipy-branch')
 makedepends=('git')
 
 _gitroot="git://github.com/mdevaev/ulib.git"
@@ -34,6 +34,6 @@ build() {
 	cp -r $_gitname $_gitname-build
 	cd $_gitname-build
 
-	python2 setup.py install --root="$pkgdir" --prefix=/usr
+	python setup.py install --root="$pkgdir" --prefix=/usr
 }
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 
 from ulib import const
@@ -20,7 +20,11 @@ if __name__ == "__main__" :
 
         packages=(
             "ulib",
+            "ulib/network",
+            "ulib/system",
+            "ulib/tests",
             "ulib/tools",
+            "ulib/ui",
             "ulib/validators",
         ),
 
