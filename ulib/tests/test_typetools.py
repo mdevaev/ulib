@@ -6,7 +6,7 @@ from ulib import typetools
 
 ##### Public classes #####
 class TestTypeTools(unittest.TestCase) :
-    def setUp(self) :
+    def __init__(self, *args_tuple, **kwargs_dict) :
         self.__from_dict = {
             "a" : {
                 "b" : {
@@ -35,6 +35,7 @@ class TestTypeTools(unittest.TestCase) :
                 ('f', [('c', 10)]),
             ]),
         ]
+        unittest.TestCase.__init__(self, *args_tuple, **kwargs_dict)
 
     def test_riter(self) :
         self.assertEqual(set(typetools.riter(self.__from_dict, 2)), set(self.__to_tuple))
@@ -45,11 +46,15 @@ class TestTypeTools(unittest.TestCase) :
     def test_has_keys_chain_false(self) :
         self.assertFalse(typetools.hasKeysChain(self.__from_dict, ("a", "x")))
 
+    ###
+
     def test_dict_to_list(self) :
         self.assertEqual(typetools.dictToList(self.__from_dict), self.__to_plain_list)
 
-    def test_dict_hash(self) :
-        self.assertEqual(typetools.dictHash(self.__from_dict), "978aaff92cac6157a5651f48febbb43782a600aa")
+    def test_object_hash(self) :
+        self.assertEqual(typetools.objectHash(self.__from_dict), "978aaff92cac6157a5651f48febbb43782a600aa")
+
+    ###
 
     def test_extend_replace(self) :
         self.assertEqual(
@@ -67,6 +72,8 @@ class TestTypeTools(unittest.TestCase) :
             [[1, 2], [3, 4], [5, 6], [7]],
         )
 
+    ###
+
     def test_pmap_one_process(self) :
         self.assertEqual(
             typetools.pmap(math.sqrt, range(1000)),
@@ -78,4 +85,19 @@ class TestTypeTools(unittest.TestCase) :
             typetools.pmap(math.sqrt, range(1000), 10),
             list(map(math.sqrt, range(1000))),
         )
+
+    ###
+
+    def test_median(self) :
+        self.assertEqual(typetools.median((5, 2, 4, 3, 1, 6)), 3.5)
+        self.assertEqual(typetools.median((5, 2, 3, 1, 6)), 3)
+        self.assertEqual(typetools.median((1,)), 1)
+        self.assertEqual(typetools.median((1,2)), 1.5)
+        self.assertEqual(typetools.median((1,2,7)), 2)
+
+    def test_average(self) :
+        self.assertEqual(typetools.average((9, 1, 4, 0, 3, 4)), 3.5)
+
+    def test_average_one(self) :
+        self.assertEqual(typetools.average((1,)), 1)
 

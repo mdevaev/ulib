@@ -19,6 +19,17 @@ def hasKeysChain(data_dict, keys_list) :
         data_dict = data_dict[key]
     return True
 
+def setKeysChain(data_dict, value, keys_list, selector = None) :
+    for key in keys_list[:-1] :
+        data_dict.setdefault(key, {})
+        data_dict = data_dict[key]
+    key = keys_list[-1]
+    if callable(selector) and data_dict.has_key(key) :
+        value = selector(data_dict[key], value)
+    data_dict[key] = value
+
+
+###
 def dictToList(data_dict) :
     data_list = []
     for key in sorted(data_dict.keys()) :
@@ -31,8 +42,12 @@ def dictToList(data_dict) :
 def utf8Hasher(text) :
     return hashlib.sha1(text.encode("utf-8")).hexdigest()
 
-def dictHash(data_dict, hasher=utf8Hasher) :
-    return hasher(json.dumps(dictToList(data_dict)))
+def objectHash(value, hasher=utf8Hasher, encoder=json.dumps) :
+    # FIXME (minor): {"foo":"bar"} == hash(("foo", "bar"))
+    # FIXME (major): hash([{3: 4, 1: 2}]) != hash([{1: 2, 3: 4}])
+    if isinstance(value, dict) :
+        value = dictToList(value)
+    return hasher(encoder(value))
 
 
 ###
@@ -61,4 +76,17 @@ def pmap(method, items_list, processes = 0) :
         finally :
             pool.close()
             pool.join()
+
+
+###
+def average(n_list) :
+    return sum(n_list) / len(n_list)
+
+def median(n_list) :
+    n_list = sorted(n_list)
+    mid = len(n_list) // 2
+    if len(n_list) % 2 == 0 :
+        return (n_list[mid-1] + n_list[mid]) / 2
+    else :
+        return n_list[mid]
 
