@@ -1,7 +1,7 @@
 # Contributor: Devaev Maxim <mdevaev@gmail.com>
 
 pkgname=python-ulib-git
-pkgver="0.5"
+pkgver="0.6"
 pkgrel=1
 pkgdesc="Useful python library"
 arch=('any')
@@ -24,7 +24,7 @@ build() {
 		msg "The local files are updated."
 		cd ..
 	else
-		git clone $_gitroot --depth=1
+		git clone --branch=v$pkgver --depth=1 $_gitroot
 	fi
 
 	msg "Git clone done or server timeout"
