@@ -8,6 +8,6 @@ pylint :
 		--output-format=colorized 2>&1 | less -SR
 
 clean :
-	find . -type d -name '__pycache__' -exec rm -rf '{}' \;
+	find . -name __pycache__ -delete
 	rm -rf pkg-root.arch pkg src build ulib.egg-info
 
