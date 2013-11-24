@@ -24,7 +24,7 @@ def setKeysChain(data_dict, value, keys_list, selector = None) :
         data_dict.setdefault(key, {})
         data_dict = data_dict[key]
     key = keys_list[-1]
-    if callable(selector) and data_dict.has_key(key) :
+    if callable(selector) and key in data_dict :
         value = selector(data_dict[key], value)
     data_dict[key] = value
 

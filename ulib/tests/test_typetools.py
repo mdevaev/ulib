@@ -46,6 +46,18 @@ class TestTypeTools(unittest.TestCase) :
     def test_has_keys_chain_false(self) :
         self.assertFalse(typetools.hasKeysChain(self.__from_dict, ("a", "x")))
 
+    def test_set_keys_chain(self) :
+        data_dict = {}
+        typetools.setKeysChain(data_dict, 1, ("a", "b", "c"))
+        self.assertEqual(data_dict, { "a" : { "b" : { "c" : 1 } } })
+
+    def test_set_keys_chain_max(self) :
+        data_dict = { "a" : { "b" : { "c" : 1 } } }
+        typetools.setKeysChain(data_dict, 0, ("a", "b", "c"), max)
+        self.assertEqual(data_dict, { "a" : { "b" : { "c" : 1 } } })
+        typetools.setKeysChain(data_dict, 2, ("a", "b", "c"), max)
+        self.assertEqual(data_dict, { "a" : { "b" : { "c" : 2 } } })
+
     ###
 
     def test_dict_to_list(self) :
