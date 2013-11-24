@@ -104,8 +104,8 @@ class TestTypeTools(unittest.TestCase) :
         self.assertEqual(typetools.median((5, 2, 4, 3, 1, 6)), 3.5)
         self.assertEqual(typetools.median((5, 2, 3, 1, 6)), 3)
         self.assertEqual(typetools.median((1,)), 1)
-        self.assertEqual(typetools.median((1,2)), 1.5)
-        self.assertEqual(typetools.median((1,2,7)), 2)
+        self.assertEqual(typetools.median((1, 2)), 1.5)
+        self.assertEqual(typetools.median((1, 2, 7)), 2)
 
     def test_average(self) :
         self.assertEqual(typetools.average((9, 1, 4, 0, 3, 4)), 3.5)
