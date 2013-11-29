@@ -8,6 +8,7 @@ from ulib import validators
 import ulib.validators.fs
 import ulib.validators.unix
 import ulib.validators.common
+import ulib.validators.extra
 import ulib.validators.network
 
 
@@ -136,22 +137,37 @@ class TestValidatorsCommon(tools.tests.TestValidatorsCase) :
 
     # def test_valid_maybe_empty(self) : pass
 
+class TestValidatorsExtra(tools.tests.TestValidatorsCase) :
     def test_valid_json(self) :
         valid_json = """{"1": 1, "3": ["a", "b", "c"], "2": 2}"""
-        self.assertEqual(json.loads(validators.common.validJson(valid_json)), json.loads(valid_json))
-        self.assertValidatorError(validators.common.validJson, "{1:1}")
+        self.assertEqual(json.loads(validators.extra.validJson(valid_json)), json.loads(valid_json))
+        self.assertValidatorError(validators.extra.validJson, "{1:1}")
 
     def test_valid_hex_string(self) :
         valid_hex_string1 = "d41d8cd98f00b204e9800998ecf8427e"
         valid_hex_string2 = valid_hex_string1.upper()
         invalid_hex_string = "d41d8cd98f00b204e9800998ecf8427ex"
         self.checkValidator(
-            validators.common.validHexString,
+            validators.extra.validHexString,
             (
                 (valid_hex_string1, valid_hex_string1),
                 (valid_hex_string2, valid_hex_string2),
             ),
             (invalid_hex_string, "", None),
+        )
+
+    def test_valid_uuid(self) :
+        valid_uuid1 = "550e8400-e29b-41d4-a716-446655440000"
+        valid_uuid2 = "00000000-0000-0000-C000-000000000046"
+        invalid_uuid1 = "550e8400-e29b-41d4-a716-44665544"
+        invalid_uuid2 = "ffffuuuu-0000-0000-C000-000000000046"
+        self.checkValidator(
+            validators.extra.validUuid,
+            (
+                (valid_uuid1, valid_uuid1),
+                (valid_uuid2, valid_uuid2),
+            ),
+            (invalid_uuid1, invalid_uuid2, "", None),
         )
 
 class TestValidatorsNetwork(tools.tests.TestValidatorsCase) :

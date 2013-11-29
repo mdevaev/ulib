@@ -1,5 +1,4 @@
 import re
-import json
 
 from ulib import validatorlib
 from ulib.validatorlib import ValidatorError
@@ -36,7 +35,7 @@ def validStringList(arg) :
     if isinstance(arg, (list, tuple)) :
         return list(map(str, list(arg)))
     arg = validatorlib.notEmptyStrip(arg, "string list")
-    return [_f for _f in re.split(r"[,\t ]+", arg) if _f]
+    return list(filter(None, re.split(r"[,\t ]+", arg)))
 
 
 ###
@@ -52,15 +51,4 @@ def validMaybeEmpty(arg, validator) :
         return validator(arg)
     else :
         return None
-
-###
-def validJson(arg) :
-    arg = validatorlib.notEmptyStrip(arg, "JSON structure")
-    try :
-        return json.dumps(json.loads(arg))
-    except Exception as err :
-        raise ValidatorError("The argument \"%s\" is not a valid JSON structure: %s" % (arg, str(err)))
-
-def validHexString(arg) :
-    return validatorlib.checkRegexp(arg, r"^[0-9a-fA-F]+$", "hex string")
 
