@@ -9,7 +9,7 @@ url="http://github.com/mdevaev/ulib.git"
 license="GPL"
 depends=('python')
 optdepends=('python-pysocks-git')
-makedepends=('git')
+makedepends=('python-setuptools' 'git')
 
 _gitroot="git://github.com/mdevaev/ulib.git"
 _gitname="ulib"
