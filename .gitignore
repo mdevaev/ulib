@@ -3,4 +3,5 @@
 /src
 /build
 /ulib.egg-info
+/dist
 *.pyc
