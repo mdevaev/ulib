@@ -1,7 +1,10 @@
 import unittest
 import math
 
-from ulib import typetools
+from .. import tools
+import ulib.tools.pep8 # pylint: disable=W0611
+
+from .. import typetools
 
 
 ##### Public classes #####
@@ -112,4 +115,8 @@ class TestTypeTools(unittest.TestCase) :
 
     def test_average_one(self) :
         self.assertEqual(typetools.average((1,)), 1)
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 

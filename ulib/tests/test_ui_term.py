@@ -3,8 +3,11 @@ import os
 import io
 import unittest
 
-from ulib import ui
-import ulib.ui.term # pylint: disable=W0611
+from .. import tools
+import ulib.tools.pep8 # pylint: disable=W0611
+
+from .. import ui
+import ulib.ui.term
 
 
 ##### Public classes #####
@@ -36,4 +39,8 @@ class TestTerm(unittest.TestCase) :
         (columns, lines) = ui.term.terminalSize(2000, 1000, -2, -1)
         self.assertEqual(columns, 2000)
         self.assertEqual(lines, 1000)
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 

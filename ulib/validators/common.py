@@ -1,7 +1,10 @@
 import re
 
-from ulib import validatorlib
-from ulib.validatorlib import ValidatorError
+from .. import tools
+import ulib.tools.pep8 # pylint: disable=W0611
+
+from .. import validatorlib
+from ..validatorlib import ValidatorError
 
 
 ##### Public methods #####
@@ -51,4 +54,8 @@ def validMaybeEmpty(arg, validator) :
         return validator(arg)
     else :
         return None
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 

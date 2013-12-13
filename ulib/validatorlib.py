@@ -1,5 +1,8 @@
 import re
 
+from . import tools
+import ulib.tools.pep8 # pylint: disable=W0611
+
 
 ##### Exceptions #####
 class ValidatorError(Exception) :
@@ -41,4 +44,8 @@ def checkIterable(arg, item_validator, iterable_validator, pass_none_flag = Fals
     if arg is None :
         return ( None if pass_none_flag else item_validator(arg) )
     return list(map(item_validator, iterable_validator(arg)))
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 

@@ -2,6 +2,9 @@ import hashlib
 import multiprocessing
 import json
 
+from . import tools
+import ulib.tools.pep8 # pylint: disable=W0611
+
 
 ##### Public methods #####
 def riter(data_dict, level, keys_hook = None, keys_list = ()) :
@@ -89,4 +92,8 @@ def median(n_list) :
         return (n_list[mid-1] + n_list[mid]) / 2
     else :
         return n_list[mid]
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 

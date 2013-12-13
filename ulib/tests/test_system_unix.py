@@ -1,8 +1,11 @@
 import unittest
 import os
 
-from ulib import system
-import ulib.system.unix # pylint: disable=W0611
+from .. import tools
+import ulib.tools.pep8 # pylint: disable=W0611
+
+from .. import system
+import ulib.system.unix
 
 
 ##### Public classes #####
@@ -20,4 +23,8 @@ class TestUnix(unittest.TestCase) :
         avg_tuple = system.unix.loadAverage()
         for avg in avg_tuple :
             self.assertTrue(isinstance(avg, float))
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 

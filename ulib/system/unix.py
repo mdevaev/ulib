@@ -1,5 +1,8 @@
 import os
 
+from .. import tools
+import ulib.tools.pep8 # pylint: disable=W0611
+
 
 ##### Public methods #####
 def diskFree(path) :
@@ -16,4 +19,8 @@ def uptime() :
 def loadAverage() :
     with open("/proc/loadavg") as loadavg_file :
         return tuple(map(float, loadavg_file.readline().split()[:3]))
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 

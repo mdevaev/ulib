@@ -1,6 +1,9 @@
 import math
 import datetime
 
+from . import tools
+import ulib.tools.pep8 # pylint: disable=W0611
+
 
 ##### Public constants #####
 UNITS_TUPLE = tuple(zip(
@@ -29,4 +32,8 @@ def formatProgress(value, limit) :
 
 def formatTimeDelta(time_delta) :
     return str(datetime.timedelta(seconds=time_delta))
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 

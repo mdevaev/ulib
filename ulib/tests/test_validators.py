@@ -1,10 +1,11 @@
 import socket
 import json
 
-from ulib import tools
+from .. import tools
 import ulib.tools.tests # pylint: disable=W0611
+import ulib.tools.pep8
 
-from ulib import validators
+from .. import validators
 import ulib.validators.fs
 import ulib.validators.unix
 import ulib.validators.common
@@ -233,4 +234,8 @@ class TestValidatorsNetwork(tools.tests.TestValidatorsCase) :
             ),
             ("yandex.ru.65536", "", None),
         )
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 

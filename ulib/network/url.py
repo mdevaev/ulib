@@ -8,6 +8,9 @@ try :
 except ImportError :
     socks = None # pylint: disable=C0103
 
+from .. import tools
+import ulib.tools.pep8 # pylint: disable=W0611
+
 
 ##### Exceptions #####
 class ServerError(Exception) :
@@ -74,4 +77,8 @@ class SocksHandler(urllib.request.HTTPHandler) :
         def build(host, port = None, strict = None, timeout = socket._GLOBAL_DEFAULT_TIMEOUT) : # pylint: disable=W0212
             return SocksConnection(*self.__args_tuple, host=host, port=port, strict=strict, timeout=timeout, **self.__kwargs_dict)
         return self.do_open(build, request)
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 

@@ -1,7 +1,10 @@
 import re
 import socket
 
-from ulib import validatorlib
+from .. import tools
+import ulib.tools.pep8 # pylint: disable=W0611
+
+from .. import validatorlib
 
 
 ##### Public methods #####
@@ -45,4 +48,8 @@ def validBsdAddress(arg) :
     if address_match is None :
         validatorlib.raiseError(arg, name)
     return (arg, (validRfcHost(address_match.group(1)), validPort(address_match.group(2))))
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 

@@ -1,7 +1,10 @@
 import json
 
-from ulib import validatorlib
-from ulib.validatorlib import ValidatorError
+from .. import tools
+import ulib.tools.pep8 # pylint: disable=W0611
+
+from .. import validatorlib
+from ..validatorlib import ValidatorError
 
 
 ##### Public methods #####
@@ -17,4 +20,8 @@ def validHexString(arg) :
 
 def validUuid(arg):
     return validatorlib.checkRegexp(arg, r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", "UUID string")
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 

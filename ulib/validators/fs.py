@@ -1,6 +1,9 @@
 import os
 
-from ulib import validatorlib
+from .. import tools
+import ulib.tools.pep8 # pylint: disable=W0611
+
+from .. import validatorlib
 
 
 ##### Public methods #####
@@ -21,4 +24,8 @@ def validFileName(arg) :
     if arg in (".", "..") :
         validatorlib.raiseError(arg, name)
     return validatorlib.checkRegexp(arg, r"^[^/\0]+$", name)
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 
