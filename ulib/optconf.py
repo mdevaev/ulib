@@ -8,7 +8,7 @@ from .validatorlib import ValidatorError
 
 
 ##### Public methods #####
-class Namespace :
+class Namespace(argparse.Namespace) : # pylint: disable=R0924,R0903
     def __getitem__(self, option) :
         return getattr(self, option[1])
 
