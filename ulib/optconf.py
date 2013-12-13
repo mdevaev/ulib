@@ -8,6 +8,14 @@ from .validatorlib import ValidatorError
 
 
 ##### Public methods #####
+class Namespace :
+    def __getitem__(self, option) :
+        return getattr(self, option[1])
+
+    def __contains__(self, key) :
+        raise NotImplementedError
+
+
 class OptionsConfig :
     def __init__(self, options_list, argv_list, config_file_path, **kwargs_dict) :
         self.__all_options_dict = {}
@@ -58,7 +66,7 @@ class OptionsConfig :
         return self.__parser
 
     def sync(self, sections_list, ignore_list = ()) :
-        options = self.__parser.parse_args(self.__remaining_list)
+        options = self.__parser.parse_args(self.__remaining_list, namespace=Namespace())
         for (dest, option_dict) in self.__all_dests_dict.items() :
             opt = option_dict["option"]
             if opt in ignore_list or not hasattr(options, dest) :
