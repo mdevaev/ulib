@@ -33,6 +33,6 @@ def __transformPep8(obj) :
             if name != pep8_name :
                 if pep8_name in obj.locals :
                     raise RuntimeError("Cannot create PEP8 alias: %s.%s -> %s.%s (destination is already exists)" % (
-                        obj.name, name, obj.name, pep8.name ))
+                        obj.name, name, obj.name, pep8_name ))
                 obj.locals[pep8_name] = obj.locals[name]
 
