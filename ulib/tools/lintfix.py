@@ -3,7 +3,7 @@ import re
 import astroid
 import astroid.nodes
 
-from .tools import pep8
+from . import pep8
 
 
 ##### Public methods #####
