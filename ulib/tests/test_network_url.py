@@ -1,4 +1,5 @@
 import unittest
+import urllib.request
 
 from .. import tools
 import ulib.tools.pep8 # pylint: disable=W0611
@@ -17,6 +18,12 @@ class TestExceptions(unittest.TestCase) :
             self.assertEqual(err.message(), "Not Found")
             self.assertEqual(err.info(), "404 Not Found")
             self.assertEqual(err.text(), "This file is not found")
+
+class TestGzipHandler(unittest.TestCase) :
+    def test_yandex_gzip(self) :
+        opener = urllib.request.build_opener(network.url.GzipHandler(only_gzip_flag=True))
+        request = urllib.request.Request("http://yandex.ru", headers={ "Accept-Encoding" : "gzip" })
+        self.assertTrue(opener.open(request).read().startswith(b"<!DOCTYPE html>"), "Garbage?")
 
 
 ##### PEP8 #####

@@ -3,6 +3,7 @@ import urllib.parse
 import urllib.error
 import http.client
 import socket
+import gzip
 try :
     import socks
 except ImportError :
@@ -37,11 +38,36 @@ class ServerError(Exception) :
 
 
 ##### Public classes #####
+class GzipHandler(urllib.request.HTTPHandler) :
+    def __init__(self, debuglevel = 0, only_gzip_flag = False) :
+        self._only_gzip_flag = only_gzip_flag
+        urllib.request.HTTPHandler.__init__(self, debuglevel=debuglevel)
+
+    def http_request(self, request) :
+        request.add_header("Accept-Encoding", "gzip")
+        return request
+
+    def http_response(self, request, response) :
+        if response.headers.get("content-encoding") == "gzip" :
+            gzip_file = gzip.GzipFile(fileobj=response, mode="r")
+            old_response = response
+            response = urllib.response.addinfourl(gzip_file, old_response.headers, old_response.url, old_response.code)
+            response.msg = old_response.msg
+        elif self._only_gzip_flag :
+            print(response.headers)
+            raise RuntimeError("Only gzip!")
+        return response
+
+    https_request = http_request
+    https_response = http_response
+
+
+###
 class SocksHandler(urllib.request.HTTPHandler) :
     def __init__(self, *args_tuple, **kwargs_dict) :
-        urllib.request.HTTPHandler.__init__(self, debuglevel=kwargs_dict.pop("debuglevel", 0))
         self._args_tuple = args_tuple
         self._kwargs_dict = kwargs_dict
+        urllib.request.HTTPHandler.__init__(self, debuglevel=kwargs_dict.pop("debuglevel", 0))
 
     def http_open(self, request) :
         def build(host, port = None, strict = None, timeout = socket._GLOBAL_DEFAULT_TIMEOUT) : # pylint: disable=W0212
