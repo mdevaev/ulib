@@ -24,7 +24,8 @@ def checkChain(arg, validators_list, name) :
     for validator in validators_list :
         try :
             return validator(arg)
-        except Exception : pass
+        except Exception :
+            pass
     raiseError(arg, name)
 
 def checkRegexp(arg, regexp, name, limit = None) :

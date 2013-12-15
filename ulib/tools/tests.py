@@ -15,5 +15,6 @@ class TestValidatorsCase(unittest.TestCase) :
         try :
             validator(arg)
             raise AssertionError("Validator should not miss the value of \"%s\"" % (arg))
-        except ValidatorError : pass
+        except ValidatorError :
+            pass
 
