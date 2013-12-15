@@ -7,6 +7,7 @@ import unittest
 from ulib.tests.test_typetools import *
 from ulib.tests.test_system_unix import *
 from ulib.tests.test_network_url import *
+from ulib.tests.test_network_xmlrpc import *
 from ulib.tests.test_ui_term import *
 from ulib.tests.test_validators import *
 
