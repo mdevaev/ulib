@@ -1,5 +1,6 @@
 import argparse
 import configparser
+import copy
 
 from . import tools
 import ulib.tools.pep8 # pylint: disable=W0611
@@ -7,26 +8,33 @@ import ulib.tools.pep8 # pylint: disable=W0611
 from .validatorlib import ValidatorError
 
 
+##### Private constants #####
+_OPT_VALIDATOR = "validator"
+_OPT_OPTION    = "option"
+_OPT_DEST      = "dest"
+_OPT_DEFAULT   = "default"
+
+
 ##### Public methods #####
-class Namespace(argparse.Namespace) : # pylint: disable=R0924,R0903,R0921
+class Namespace(argparse.Namespace) : # pylint: disable=R0924,R0903
     def __getitem__(self, option) :
         return getattr(self, option[1])
 
     def __contains__(self, key) :
-        raise NotImplementedError
+        raise RuntimeError("Use hasattr() for this")
 
 
 class OptionsConfig :
-    def __init__(self, options_list, argv_list, config_file_path, **kwargs_dict) :
+    def __init__(self, options_list, config_file_path, argv_list = None, **kwargs_dict) :
         self.__all_options_dict = {}
         self.__all_dests_dict = {}
         for option_tuple in options_list :
             (option, dest, default, validator) = option_tuple
             option_dict = {
-                "option"    : option_tuple,
-                "dest"      : dest,
-                "default"   : default,
-                "validator" : validator,
+                _OPT_OPTION    : option_tuple,
+                _OPT_DEST      : dest,
+                _OPT_DEFAULT   : default,
+                _OPT_VALIDATOR : validator,
             }
             self.__all_options_dict[option] = option_dict
             if not dest is None :
@@ -55,7 +63,7 @@ class OptionsConfig :
             for option in arg_tuple[0]
         ]
         kwargs_dict = arg_tuple[2]
-        kwargs_dict.update({ "dest" : arg_tuple[1][1], "default" : None })
+        kwargs_dict.update({ _OPT_DEST : arg_tuple[1][1], _OPT_DEFAULT : None })
         self.__parser.add_argument(*options_list, **kwargs_dict)
 
     def addArguments(self, *args_tuple) :
@@ -66,14 +74,15 @@ class OptionsConfig :
         return self.__parser
 
     def sync(self, sections_list, ignore_list = ()) :
-        options = self.__parser.parse_args(self.__remaining_list, namespace=Namespace())
+        raw_options = self.__parser.parse_args(self.__remaining_list, namespace=Namespace())
+        options = copy.copy(raw_options)
         for (dest, option_dict) in self.__all_dests_dict.items() :
-            opt = option_dict["option"]
-            if opt in ignore_list or not hasattr(options, dest) :
+            option_tuple = option_dict[_OPT_OPTION]
+            if option_tuple in ignore_list or not hasattr(options, dest) :
                 continue
-            value = self.getCommonOption(sections_list, option_dict["option"], getattr(options, dest))
+            value = self.getCommonOption(sections_list, option_tuple, getattr(options, dest))
             setattr(options, dest, value)
-        return options
+        return (options, raw_options)
 
     def getOption(self, section, option_tuple) :
         (option, _, default, validator) = option_tuple
@@ -98,7 +107,7 @@ class OptionsConfig :
         for section in parser.sections() :
             config_dict.setdefault(section, {})
             for option in parser.options(section) :
-                validator = self.__all_options_dict.get(option, {}).get("validator")
+                validator = self.__all_options_dict.get(option, {}).get(_OPT_VALIDATOR)
                 if validator is None :
                     raise ValidatorError("Unknown option: %s::%s" % (section, option))
                 else :
