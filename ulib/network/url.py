@@ -63,6 +63,14 @@ class GzipHandler(urllib.request.HTTPHandler) :
 
 
 ###
+class NoRedirectsHandler(urllib.request.HTTPRedirectHandler) : # pylint: disable=W0232
+    def http_error_302(self, *args_tuple, **kwargs_dict) :
+        return None
+
+    http_error_301 = http_error_303 = http_error_307 = http_error_302
+
+
+###
 class SocksHandler(urllib.request.HTTPHandler) :
     def __init__(self, *args_tuple, **kwargs_dict) :
         self._args_tuple = args_tuple
