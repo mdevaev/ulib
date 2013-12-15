@@ -32,7 +32,9 @@ if __name__ == "__main__" :
             "Topic :: Software Development :: Libraries :: Python Modules",
             "Development Status :: 4 - Beta",
             "Programming Language :: Python",
+            "Programming Language :: Python :: 3",
             "Operating System :: OS Independent",
+            "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
         ),
     )
 
