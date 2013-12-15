@@ -54,7 +54,6 @@ class GzipHandler(urllib.request.HTTPHandler) :
             response = urllib.response.addinfourl(gzip_file, old_response.headers, old_response.url, old_response.code)
             response.msg = old_response.msg
         elif self._only_gzip_flag :
-            print(response.headers)
             raise RuntimeError("Only gzip!")
         return response
 

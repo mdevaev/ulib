@@ -27,15 +27,14 @@ class ExtraTransport(xmlrpc.client.Transport) :
         retval = xmlrpc.client.Transport.parse_response(self, response)
         headers_dict = dict(response.getheaders())
 
-        # XXX: This magic I found in /usr/lib/python3.3/xmlrpc/client.py:1422
-        # ServerProxy code will be executed only for a dictionary with a single element,
-        # inevitably leads to an error (you can not index the dictionary).
-        # Since we have a few items, then everything will work fine.
-        # However, this behavior can be used to change, so in this case I have a test.
         if not self._extra_flag :
             return retval
         else :
-            # XXX: More magic. juggler.tests.test_xmlrpc should pass.
+            # XXX: This magic I found in /usr/lib/python3.3/xmlrpc/client.py:1422
+            # ServerProxy code will be executed only for a dictionary with a single element,
+            # inevitably leads to an error (you can not index the dictionary).
+            # Since we have a few items, then everything will work fine.
+            # However, this behavior can be used to change, so in this case I have a test.
             if len(retval) == 1 :
                 retval = retval[0]
             return {
