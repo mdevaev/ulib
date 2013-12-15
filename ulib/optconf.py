@@ -26,8 +26,8 @@ class Namespace(argparse.Namespace) : # pylint: disable=R0924,R0903
 
 class OptionsConfig :
     def __init__(self, options_list, config_file_path, argv_list = None, **kwargs_dict) :
-        self.__all_options_dict = {}
-        self.__all_dests_dict = {}
+        self._all_options_dict = {}
+        self._all_dests_dict = {}
         for option_tuple in options_list :
             (option, dest, default, validator) = option_tuple
             option_dict = {
@@ -36,23 +36,23 @@ class OptionsConfig :
                 _OPT_DEFAULT   : default,
                 _OPT_VALIDATOR : validator,
             }
-            self.__all_options_dict[option] = option_dict
+            self._all_options_dict[option] = option_dict
             if not dest is None :
-                self.__all_dests_dict[dest] = option_dict
+                self._all_dests_dict[dest] = option_dict
 
         parser = argparse.ArgumentParser(add_help=False)
         version = kwargs_dict.pop("version", None)
         if not version is None :
             parser.add_argument("-v", "--version", action="version", version=version)
         parser.add_argument("-c", "--config", dest="config_file_path", default=config_file_path, metavar="<file>")
-        (options, self.__remaining_list) = parser.parse_known_args(argv_list)
+        (options, self._remaining_list) = parser.parse_known_args(argv_list)
 
-        self.__config_dict = ( {} if options.config_file_path is None else self.__readConfig(options.config_file_path) )
+        self._config_dict = ( {} if options.config_file_path is None else self._readConfig(options.config_file_path) )
         kwargs_dict.update({
                 "formatter_class" : argparse.RawDescriptionHelpFormatter,
                 "parents"         : [parser],
             })
-        self.__parser = argparse.ArgumentParser(**kwargs_dict)
+        self._parser = argparse.ArgumentParser(**kwargs_dict)
 
 
     ### Public ###
@@ -64,18 +64,18 @@ class OptionsConfig :
         ]
         kwargs_dict = arg_tuple[2]
         kwargs_dict.update({ _OPT_DEST : arg_tuple[1][1], _OPT_DEFAULT : None })
-        return self.__parser.add_argument(*options_list, **kwargs_dict)
+        return self._parser.add_argument(*options_list, **kwargs_dict)
 
     def addArguments(self, *args_tuple) :
         return list(map(self.addArgument, args_tuple))
 
     def addRawArgument(self, *args_tuple, **kwargs_dict) :
-        return self.__parser.add_argument(*args_tuple, **kwargs_dict)
+        return self._parser.add_argument(*args_tuple, **kwargs_dict)
 
     def sync(self, sections_list, ignore_list = ()) :
-        raw_options = self.__parser.parse_args(self.__remaining_list, namespace=Namespace())
+        raw_options = self._parser.parse_args(self._remaining_list, namespace=Namespace())
         options = copy.copy(raw_options)
-        for (dest, option_dict) in self.__all_dests_dict.items() :
+        for (dest, option_dict) in self._all_dests_dict.items() :
             option_tuple = option_dict[_OPT_OPTION]
             if option_tuple in ignore_list or not hasattr(options, dest) :
                 continue
@@ -86,49 +86,49 @@ class OptionsConfig :
     ###
 
     def config(self) :
-        return self.__config_dict
+        return self._config_dict
 
     def configValue(self, section, option_tuple) :
         (option, _, default, validator) = option_tuple
-        return self.__raiseIncorrectValue(option, validator, self.__config_dict[section].get(option, default))
+        return self._raiseIncorrectValue(option, validator, self._config_dict[section].get(option, default))
 
     def commonValue(self, sections_list, option_tuple, cli_value = None) :
         (option, _, default, validator) = option_tuple
         if cli_value is None :
             requests_list = [ (section, option) for section in sections_list ]
-            value = self.__lastValue(default, requests_list)
+            value = self._lastValue(default, requests_list)
         else :
             value = cli_value
-        return self.__raiseIncorrectValue(option, validator, value)
+        return self._raiseIncorrectValue(option, validator, value)
 
 
     ### Private ###
 
-    def __readConfig(self, file_path) :
+    def _readConfig(self, file_path) :
         parser = configparser.ConfigParser()
         parser.read(file_path)
         config_dict = {}
         for section in parser.sections() :
             config_dict.setdefault(section, {})
             for option in parser.options(section) :
-                validator = self.__all_options_dict.get(option, {}).get(_OPT_VALIDATOR)
+                validator = self._all_options_dict.get(option, {}).get(_OPT_VALIDATOR)
                 if validator is None :
                     raise ValidatorError("Unknown option: %s::%s" % (section, option))
                 else :
                     value = parser.get(section, option)
-                    value = self.__raiseIncorrectValue("%s::%s" % (section, option), validator, value)
+                    value = self._raiseIncorrectValue("%s::%s" % (section, option), validator, value)
                     config_dict[section][option] = value
         return config_dict
 
-    def __lastValue(self, first, requests_list) :
+    def _lastValue(self, first, requests_list) :
         assert len(requests_list) > 0
         last_value = first
         for (section, option) in requests_list :
-            if option in self.__config_dict.get(section, {}) :
-                last_value = self.__config_dict[section][option]
+            if option in self._config_dict.get(section, {}) :
+                last_value = self._config_dict[section][option]
         return last_value
 
-    def __raiseIncorrectValue(self, option, validator, value) :
+    def _raiseIncorrectValue(self, option, validator, value) :
         try :
             return validator(value)
         except ValidatorError as err :

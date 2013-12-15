@@ -23,13 +23,13 @@ def colored(codes_list, text, force_colors_flag = False, raw_flag = False, outpu
 def terminalSize(min_columns = 80, min_lines = 24, default_columns = 80, default_lines = 24, output = sys.stdout) :
     # XXX: http://stackoverflow.com/questions/566746/how-to-get-console-window-width-in-python
 
-    (columns, lines) = __environTerminalSize(output)
+    (columns, lines) = _environTerminalSize(output)
     if columns > 0 and lines > 0 :
         return (columns, lines)
 
     method = {
-        "posix" : __posixTerminalSize,
-        "nt"    : __ntTerminalSize,
+        "posix" : _posixTerminalSize,
+        "nt"    : _ntTerminalSize,
     }.get(os.name)
     if method is None :
         return (default_columns, default_lines)
@@ -42,13 +42,13 @@ def terminalSize(min_columns = 80, min_lines = 24, default_columns = 80, default
 
 
 ##### Private methods #####
-def __environTerminalSize(output) :
+def _environTerminalSize(output) :
     try :
         return (int(os.environ["COLUMNS"]), int(os.environ["LINES"]))
     except (KeyError, ValueError) :
         return (0, 0)
 
-def __posixTerminalSize(output) :
+def _posixTerminalSize(output) :
     import fcntl
     import termios
 
@@ -60,7 +60,7 @@ def __posixTerminalSize(output) :
     (lines, columns) = struct.unpack("HHHH", gwinsz)[:2]
     return (columns, lines)
 
-def __ntTerminalSize(output) :
+def _ntTerminalSize(output) :
     import ctypes
 
     if output == sys.stdin :

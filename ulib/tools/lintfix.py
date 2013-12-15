@@ -8,12 +8,12 @@ from . import pep8
 
 ##### Public methods #####
 def register(linter):
-    astroid.MANAGER.register_transform(astroid.nodes.Module, __transformPep8)
-    astroid.MANAGER.register_transform(astroid.nodes.Class, __transformPep8)
+    astroid.MANAGER.register_transform(astroid.nodes.Module, _transformPep8)
+    astroid.MANAGER.register_transform(astroid.nodes.Class, _transformPep8)
 
 
 ##### Private methods #####
-def __transformPep8(obj) :
+def _transformPep8(obj) :
     rename_regexp = re.compile(pep8.RENAME_REGEXP)
     if isinstance(obj, astroid.nodes.Module) :
         module_name = obj.name

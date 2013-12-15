@@ -16,24 +16,24 @@ import ulib.tools.pep8 # pylint: disable=W0611
 class ServerError(Exception) :
     def __init__(self, code, text) :
         super(ServerError, self).__init__()
-        self.__code = code
-        self.__text = text
-        self.__message = http.client.responses[code]
+        self._code = code
+        self._text = text
+        self._message = http.client.responses[code]
 
     def code(self) :
-        return self.__code
+        return self._code
 
     def message(self) :
-        return self.__message
+        return self._message
 
     def info(self) :
-        return "%d %s" % (self.__code, self.__message)
+        return "%d %s" % (self._code, self._message)
 
     def text(self) :
-        return self.__text
+        return self._text
 
     def __str__(self) :
-        return "%d %s [%s]" % (self.__code, self.__message, self.__text)
+        return "%d %s [%s]" % (self._code, self._message, self._text)
 
 
 ##### Public classes #####
@@ -58,11 +58,11 @@ class SocksConnection(http.client.HTTPConnection) :
             if proxy_type is None :
                 raise RuntimeError("Invalid SOCKS protocol: %s" % (scheme))
 
-        self.__proxy_args_tuple = (proxy_type, proxy_host, proxy_port, rdns_flag, proxy_user, proxy_passwd)
+        self._proxy_args_tuple = (proxy_type, proxy_host, proxy_port, rdns_flag, proxy_user, proxy_passwd)
 
     def connect(self) :
         self.sock = socks.socksocket()
-        self.sock.setproxy(*self.__proxy_args_tuple)
+        self.sock.setproxy(*self._proxy_args_tuple)
         if not self.timeout is socket._GLOBAL_DEFAULT_TIMEOUT : # pylint: disable=W0212
             self.sock.settimeout(self.timeout)
         self.sock.connect((self.host, self.port))
@@ -70,12 +70,12 @@ class SocksConnection(http.client.HTTPConnection) :
 class SocksHandler(urllib.request.HTTPHandler) :
     def __init__(self, *args_tuple, **kwargs_dict) :
         urllib.request.HTTPHandler.__init__(self, debuglevel=kwargs_dict.pop("debuglevel", 0))
-        self.__args_tuple = args_tuple
-        self.__kwargs_dict = kwargs_dict
+        self._args_tuple = args_tuple
+        self._kwargs_dict = kwargs_dict
 
     def http_open(self, request) :
         def build(host, port = None, strict = None, timeout = socket._GLOBAL_DEFAULT_TIMEOUT) : # pylint: disable=W0212
-            return SocksConnection(*self.__args_tuple, host=host, port=port, strict=strict, timeout=timeout, **self.__kwargs_dict)
+            return SocksConnection(*self._args_tuple, host=host, port=port, strict=strict, timeout=timeout, **self._kwargs_dict)
         return self.do_open(build, request)
 
 
