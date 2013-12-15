@@ -64,14 +64,13 @@ class OptionsConfig :
         ]
         kwargs_dict = arg_tuple[2]
         kwargs_dict.update({ _OPT_DEST : arg_tuple[1][1], _OPT_DEFAULT : None })
-        self.__parser.add_argument(*options_list, **kwargs_dict)
+        return self.__parser.add_argument(*options_list, **kwargs_dict)
 
     def addArguments(self, *args_tuple) :
-        for arg_tuple in args_tuple :
-            self.addArgument(arg_tuple)
+        return list(map(self.addArgument, args_tuple))
 
-    def parser(self) :
-        return self.__parser
+    def addRawArgument(self, *args_tuple, **kwargs_dict) :
+        return self.__parser.add_argument(*args_tuple, **kwargs_dict)
 
     def sync(self, sections_list, ignore_list = ()) :
         raw_options = self.__parser.parse_args(self.__remaining_list, namespace=Namespace())
@@ -80,15 +79,20 @@ class OptionsConfig :
             option_tuple = option_dict[_OPT_OPTION]
             if option_tuple in ignore_list or not hasattr(options, dest) :
                 continue
-            value = self.getCommonOption(sections_list, option_tuple, getattr(options, dest))
+            value = self.commonValue(sections_list, option_tuple, getattr(options, dest))
             setattr(options, dest, value)
         return (options, raw_options)
 
-    def getOption(self, section, option_tuple) :
+    ###
+
+    def config(self) :
+        return self.__config_dict
+
+    def configValue(self, section, option_tuple) :
         (option, _, default, validator) = option_tuple
         return self.__raiseIncorrectValue(option, validator, self.__config_dict[section].get(option, default))
 
-    def getCommonOption(self, sections_list, option_tuple, cli_value = None) :
+    def commonValue(self, sections_list, option_tuple, cli_value = None) :
         (option, _, default, validator) = option_tuple
         if cli_value is None :
             requests_list = [ (section, option) for section in sections_list ]
