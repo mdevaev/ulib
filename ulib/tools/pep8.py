@@ -26,7 +26,7 @@ def setupAliases(obj = None) :
         elif inspect.isfunction(attr) :
             pep8_name = re.sub(rename_regexp, RENAME_PLACEHOLDERS, name).lower()
             if name != pep8_name :
-                if not getattr(obj, pep8_name, None) is None :
+                if getattr(obj, pep8_name, None) is not None :
                     raise RuntimeError("Cannot create PEP8 alias: %s.%s -> %s.%s (destination is already exists)" % (
                         obj.__name__, name, obj.__name__, pep8_name ))
                 setattr(obj, pep8_name, attr)

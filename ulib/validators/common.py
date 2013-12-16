@@ -23,9 +23,9 @@ def validNumber(arg, min_value = None, max_value = None, value_type = int) :
     except Exception :
         validatorlib.raiseError(arg, "number")
 
-    if not min_value is None and arg < min_value :
+    if min_value is not None and arg < min_value :
         raise ValidatorError("The argument \"%s\" must be greater or equal than %d" % (arg, min_value))
-    if not max_value is None and arg > max_value :
+    if max_value is not None and arg > max_value :
         raise ValidatorError("The argument \"%s\" must be lesser or equal then %d" % (arg, max_value))
     return arg
 
@@ -50,7 +50,7 @@ def validEmpty(arg) :
 
 def validMaybeEmpty(arg, validator) :
     arg = validEmpty(arg)
-    if not arg is None :
+    if arg is not None :
         return validator(arg)
     else :
         return None

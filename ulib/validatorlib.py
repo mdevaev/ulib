@@ -30,14 +30,14 @@ def checkChain(arg, validators_list, name) :
 
 def checkRegexp(arg, regexp, name, limit = None) :
     arg = notEmptyStrip(arg, name)
-    if not limit is None :
+    if limit is not None :
         arg = arg[:limit]
     if re.match(regexp, arg) is None :
         raiseError(arg, name)
     return arg
 
 def checkRange(arg, valid_args_list, name) :
-    if not arg in valid_args_list :
+    if arg not in valid_args_list :
         raiseError(arg, name)
     return arg
 

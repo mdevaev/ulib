@@ -7,7 +7,7 @@ import ulib.tools.pep8 # pylint: disable=W0611
 ##### Public methods #####
 def diskFree(path) :
     statvfs = os.statvfs(path)
-    assert not statvfs is None
+    assert statvfs is not None
     full = statvfs.f_blocks * statvfs.f_bsize
     free = statvfs.f_bavail * statvfs.f_bsize
     return (full, full - free)

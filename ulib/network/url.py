@@ -88,7 +88,7 @@ class SocksConnection(http.client.HTTPConnection) :
             raise RuntimeError("Required module SocksiPy")
         http.client.HTTPConnection.__init__(self, *args_tuple, **kwargs_dict)
 
-        if not proxy_url is None :
+        if proxy_url is not None :
             parsed = urllib.parse.urlparse(proxy_url)
             scheme = parsed.scheme
             proxy_user = parsed.username
@@ -107,7 +107,7 @@ class SocksConnection(http.client.HTTPConnection) :
     def connect(self) :
         self.sock = socks.socksocket()
         self.sock.setproxy(*self._proxy_args_tuple)
-        if not self.timeout is socket._GLOBAL_DEFAULT_TIMEOUT : # pylint: disable=W0212
+        if self.timeout is not socket._GLOBAL_DEFAULT_TIMEOUT : # pylint: disable=W0212
             self.sock.settimeout(self.timeout)
         self.sock.connect((self.host, self.port))
 

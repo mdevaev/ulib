@@ -37,12 +37,12 @@ class OptionsConfig :
                 _OPT_VALIDATOR : validator,
             }
             self._all_options_dict[option] = option_dict
-            if not dest is None :
+            if dest is not None :
                 self._all_dests_dict[dest] = option_dict
 
         parser = argparse.ArgumentParser(add_help=False)
         version = kwargs_dict.pop("version", None)
-        if not version is None :
+        if version is not None :
             parser.add_argument("-v", "--version", action="version", version=version)
         parser.add_argument("-c", "--config", dest="config_file_path", default=config_file_path, metavar="<file>")
         (options, self._remaining_list) = parser.parse_known_args(argv_list)

@@ -17,7 +17,7 @@ def riter(data_dict, level, keys_hook = None, keys_list = ()) :
 
 def hasKeysChain(data_dict, keys_list) :
     for key in keys_list :
-        if not key in data_dict :
+        if key not in data_dict :
             return False
         data_dict = data_dict[key]
     return True
