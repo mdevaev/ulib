@@ -13,6 +13,18 @@ from .. import tools
 import ulib.tools.pep8 # pylint: disable=W0611
 
 
+##### Public constants #####
+SCHEME_SOCKS4 = "socks4"
+SCHEME_SOCKS5 = "socks5"
+
+SCHEME_TO_TYPE_MAP = {
+    SCHEME_SOCKS4 : socks.PROXY_TYPE_SOCKS4,
+    SCHEME_SOCKS5 : socks.PROXY_TYPE_SOCKS5,
+}
+
+SOCKS_PORT = 1080
+
+
 ##### Exceptions #####
 class ServerError(Exception) :
     def __init__(self, code, text) :
@@ -85,7 +97,7 @@ class SocksConnection(http.client.HTTPConnection) :
     def __init__(self, proxy_url = None, proxy_type = None, proxy_host = None, proxy_port = None,
         proxy_user = None, proxy_passwd = None, rdns_flag = True, *args_tuple, **kwargs_dict) :
         if socks is None :
-            raise RuntimeError("Required module SocksiPy")
+            raise RuntimeError("Required module SocksiPy (the recommended is https://github.com/Anorov/PySocks)")
         http.client.HTTPConnection.__init__(self, *args_tuple, **kwargs_dict)
 
         if proxy_url is not None :
@@ -94,11 +106,8 @@ class SocksConnection(http.client.HTTPConnection) :
             proxy_user = parsed.username
             proxy_passwd = parsed.password
             proxy_host = parsed.hostname
-            proxy_port = ( parsed.port or 1080 )
-            proxy_type = {
-                "socks4" : socks.PROXY_TYPE_SOCKS4,
-                "socks5" : socks.PROXY_TYPE_SOCKS5,
-            }.get(( scheme or "" ).lower())
+            proxy_port = ( parsed.port or SOCKS_PORT )
+            proxy_type = SCHEME_TO_TYPE_MAP.get(( scheme or "" ).lower())
             if proxy_type is None :
                 raise RuntimeError("Invalid SOCKS protocol: %s" % (scheme))
 
