@@ -74,7 +74,7 @@ class GzipHandler(urllib.request.HTTPHandler) :
 
 
 ###
-class NoRedirectsHandler(urllib.request.HTTPRedirectHandler) : # pylint: disable=W0232
+class NoRedirectHandler(urllib.request.HTTPRedirectHandler) : # pylint: disable=W0232
     def http_error_302(self, *args_tuple, **kwargs_dict) :
         return None
 
