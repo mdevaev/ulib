@@ -3,7 +3,7 @@ import re
 
 
 ##### Public constants #####
-RENAME_REGEXP = r"([a-z0-9])([A-Z])"
+RENAME_REGEXP       = r"([a-z0-9])([A-Z])"
 RENAME_PLACEHOLDERS = r"\1_\2"
 
 
@@ -25,9 +25,6 @@ def setupAliases(obj = None) :
 
         elif inspect.isfunction(attr) :
             pep8_name = re.sub(rename_regexp, RENAME_PLACEHOLDERS, name).lower()
-            if name != pep8_name :
-                if getattr(obj, pep8_name, None) is not None :
-                    raise RuntimeError("Cannot create PEP8 alias: %s.%s -> %s.%s (destination is already exists)" % (
-                        obj.__name__, name, obj.__name__, pep8_name ))
+            if name != pep8_name and not hasattr(obj, pep8_name) :
                 setattr(obj, pep8_name, attr)
 

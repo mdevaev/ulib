@@ -30,9 +30,6 @@ def _transformPep8(obj) :
             if not isinstance(method, astroid.nodes.Function) or name.startswith("_") :
                 continue
             pep8_name = re.sub(rename_regexp, pep8.RENAME_PLACEHOLDERS, name).lower()
-            if name != pep8_name :
-                if pep8_name in obj.locals :
-                    raise RuntimeError("Cannot create PEP8 alias: %s.%s -> %s.%s (destination is already exists)" % (
-                        obj.name, name, obj.name, pep8_name ))
+            if name != pep8_name and pep8_name not in obj.locals :
                 obj.locals[pep8_name] = obj.locals[name]
 
