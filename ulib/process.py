@@ -35,6 +35,7 @@ def execProcess(
         proc_args_list,
         proc_input = None,
         env_dict = None,
+        cwd = None,
         fatal_flag = True,
         shell_flag=False,
         private_input_flag = False,
@@ -57,6 +58,7 @@ def execProcess(
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         env=env_dict,
+        cwd=cwd,
     )
     (proc_stdout, proc_stderr) = proc.communicate(proc_input)
     proc_retcode = proc.returncode
