@@ -17,10 +17,12 @@ import ulib.tools.pep8 # pylint: disable=W0611
 SCHEME_SOCKS4 = "socks4"
 SCHEME_SOCKS5 = "socks5"
 
-SCHEME_TO_TYPE_MAP = {
-    SCHEME_SOCKS4 : socks.PROXY_TYPE_SOCKS4,
-    SCHEME_SOCKS5 : socks.PROXY_TYPE_SOCKS5,
-}
+SCHEME_TO_TYPE_MAP = {}
+if socks is not None :
+    SCHEME_TO_TYPE_MAP.update({
+            SCHEME_SOCKS4 : socks.PROXY_TYPE_SOCKS4,
+            SCHEME_SOCKS5 : socks.PROXY_TYPE_SOCKS5,
+        })
 
 SOCKS_PORT = 1080
 
