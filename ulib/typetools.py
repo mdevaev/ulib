@@ -10,10 +10,10 @@ import ulib.tools.pep8 # pylint: disable=W0611
 def riter(data_dict, level, keys_hook = None, keys_list = ()) :
     for key in ( data_dict if keys_hook == None else keys_hook(list(data_dict.keys())) ) :
         if level > 0 :
-            for result in riter(data_dict[key], level - 1, keys_hook, keys_list+(key,)) :
+            for result in riter(data_dict[key], level - 1, keys_hook, tuple(keys_list)+(key,)) :
                 yield result
         else :
-            yield (keys_list+(key,), data_dict[key])
+            yield (tuple(keys_list)+(key,), data_dict[key])
 
 def hasKeysChain(data_dict, keys_list) :
     for key in keys_list :
