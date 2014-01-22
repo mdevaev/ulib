@@ -61,6 +61,21 @@ class TestTypeTools(unittest.TestCase) :
         typetools.setKeysChain(data_dict, 2, ("a", "b", "c"), max)
         self.assertEqual(data_dict, { "a" : { "b" : { "c" : 2 } } })
 
+    def test_merge_dicts(self) :
+        a_dict = {
+            1 : { "a" : "A" },
+            2 : { "b" : "B" },
+        }
+        b_dict = {
+            2 : { "c" : "C" },
+            3 : { "d" : "D" },
+        }
+        self.assertEqual(typetools.mergeDicts(a_dict, b_dict), {
+                1 : { "a" : "A" },
+                2 : { "b" : "B", "c" : "C" },
+                3 : { "d" : "D" },
+            })
+
     ###
 
     def test_dict_to_list(self) :

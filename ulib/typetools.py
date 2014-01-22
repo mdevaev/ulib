@@ -31,6 +31,18 @@ def setKeysChain(data_dict, value, keys_list, selector = None) :
         value = selector(data_dict[key], value)
     data_dict[key] = value
 
+# XXX: http://stackoverflow.com/questions/7204805/python-dictionaries-of-dictionaries-merge
+def mergeDicts(a_dict, b_dict, path_list = None) :
+    if path_list is None :
+        path_list = []
+    for key in b_dict :
+        if key in a_dict :
+            if isinstance(a_dict[key], dict) and isinstance(b_dict[key], dict) :
+                mergeDicts(a_dict[key], b_dict[key], list(path_list) + [str(key)])
+                continue
+        a_dict[key] = b_dict[key]
+    return a_dict
+
 
 ###
 def dictToList(data_dict) :
