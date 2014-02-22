@@ -11,6 +11,7 @@ import ulib.validators.unix
 import ulib.validators.common
 import ulib.validators.extra
 import ulib.validators.network
+import ulib.validators.python
 
 
 ##### Public classes #####
@@ -233,6 +234,20 @@ class TestValidatorsNetwork(tools.tests.TestValidatorsCase) :
                 ("canterlot.eq.80", ("canterlot.eq.80", ("canterlot.eq", 80))),
             ),
             ("yandex.ru.65536", "", None),
+        )
+
+class TestValidatorsPython(tools.tests.TestValidatorsCase) :
+    def test_valid_object_name(self) :
+        self.checkValidator(
+            validators.python.validObjectName,
+            (
+                ("__test",         "__test"),
+                ("__test__",       "__test__"),
+                ("Object_Name",    "Object_Name"),
+                ("objectName123",  "objectName123"),
+                ("_",              "_"),
+            ),
+            (".object", "123object", "/object"),
         )
 
 
