@@ -1,8 +1,7 @@
 ulib
 ====
 
-.. image:: https://secure.travis-ci.org/mdevaev/ulib.png
-   :target: http://travis-ci.org/mdevaev/ulib
+![http://travis-ci.org/mdevaev/ulib](https://secure.travis-ci.org/mdevaev/ulib.png)
 
 Useful Python library
 
