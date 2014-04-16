@@ -100,6 +100,7 @@ class SocksConnection(http.client.HTTPConnection) :
         proxy_user = None, proxy_passwd = None, rdns_flag = True, *args_tuple, **kwargs_dict) :
         if socks is None :
             raise RuntimeError("Required module SocksiPy (the recommended is https://github.com/Anorov/PySocks)")
+        kwargs_dict.pop("strict", None) # XXX: Fix for "TypeError: __init__() got an unexpected keyword argument 'strict'"
         http.client.HTTPConnection.__init__(self, *args_tuple, **kwargs_dict)
 
         if proxy_url is not None :
