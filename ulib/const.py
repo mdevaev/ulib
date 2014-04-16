@@ -1,5 +1,5 @@
 ##### Public constants #####
-VERSION_TUPLE = (0, 24)
+VERSION_TUPLE = (0, 25)
 VERSION = ".".join(map(str, VERSION_TUPLE))
 
 UPSTREAM_URL = "https://github.com/mdevaev/ulib"
