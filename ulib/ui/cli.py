@@ -1,6 +1,9 @@
 import sys
 import traceback
 
+from .. import tools
+import ulib.tools.pep8 # pylint: disable=W0611
+
 
 ##### Public methods #####
 def oneLine(text, short_flag = True, output = sys.stdout, static_list = [""]) : # pylint: disable=W0102
@@ -23,4 +26,8 @@ def newLine(text, output = sys.stdout) :
 def printTraceback(prefix = "", output = sys.stdout) :
     for row in traceback.format_exc().strip().split("\n") :
         print(prefix + row, file=output)
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 

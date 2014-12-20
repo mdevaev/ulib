@@ -2,6 +2,9 @@ import os
 import sys
 import struct
 
+from .. import tools
+import ulib.tools.pep8 # pylint: disable=W0611
+
 
 ##### Public methods #####
 def colored(codes_list, text, force_colors_flag = False, raw_flag = False, output = sys.stdout) :
@@ -84,4 +87,8 @@ def _ntTerminalSize(output) :
         return (0, 0)
     except Exception :
         return (0, 0)
+
+
+##### PEP8 #####
+tools.pep8.setupAliases()
 
